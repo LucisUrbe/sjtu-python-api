@@ -53,7 +53,53 @@ def login(jaccount_name: str, jaccount_password: str) -> dict:
                 cookies = ''
                 for key, value in response.cookies.items():
                     cookies += key + '=' + value + ';'
-                print('[WARN/LOGIN] WRONG CAPTCHA SOLUTION, RETRYING...')
+                if '&err=' in response.url:
+                    if '&err=1' in response.url:
+                        print('[WARN/LOGIN] WRONG CAPTCHA SOLUTION, RETRYING...')
+                    elif '&err=0' in response.url:
+                        print('[ERROR/LOGIN] WRONG USER NAME OR PASSWORD!')
+                        return {} #
+                    elif '&err=2' in response.url:
+                        print('[ERROR/LOGIN] SJTU JACCOUNT SYSTEM IS DOWN, PLEASE TRY AGAIN LATER.')
+                        quit(-2)
+                    elif '&err=3' in response.url:
+                        print('[ERROR/LOGIN] ACCOUNT FROM DELEGATED AGENCY DOES NOT EXIST, PLEASE RETRY SELECTION.')
+                        quit(-3)
+                    elif '&err=4' in response.url:
+                        print('[ERROR/LOGIN] ACCOUNT FROM DELEGATED AGENCY HAS EXPIRED, PLEASE RETRY SELECTION.')
+                        quit(-4)
+                    elif '&err=5' in response.url:
+                        print('[ERROR/LOGIN] CURRENT DELEGATED AGENCY IS INVALID, PLEASE RETRY SELECTION.')
+                        quit(-5)
+                    elif '&err=6' in response.url:
+                        print('[ERROR/LOGIN] YOU HAS CHANGED YOUR PASSWORD. CURRENT SESSION REQUIRE YOU TO RETRY LOGIN.')
+                        return {}
+                    elif '&err=7' in response.url:
+                        print('[ERROR/LOGIN] YOUR ACCOUNT IS CURRENTLY NOT LOG-ABLE.')
+                        quit(-7)
+                    elif '&err=8' in response.url:
+                        print('[ERROR/LOGIN] LOGIN SESSION IS STALE. PLEASE RETRY.')
+                        return {} #
+                    elif '&err=9' in response.url:
+                        print('[ERROR/LOGIN] QR CODE IS STALE. PLEASE REFRESH.')
+                        return {} #
+                    elif '&err=10' in response.url:
+                        print('[ERROR/LOGIN] SJTU INFOPLUS TASKCENTER LOGIN IS STALE. RETRY LOGGIN IN TO THE APP.')
+                        return {} #
+                    elif '&err=11' in response.url:
+                        print('[ERROR/LOGIN] PLEASE SCAN QR CODE BY WECHAT OR SJTU INFOPLUS TASKCENTER.')
+                        return {} #
+                    elif '&err=12' in response.url:
+                        print('[ERROR/LOGIN] EXCEPTION WHILE FETCHING WECHAT LOGIN. PLEASE RETRY.')
+                        return {} #
+                    elif '&err=13' in response.url:
+                        print('[ERROR/LOGIN] NO JACCOUNT BINDED TO WECHAT. PLEASE LOG IN BY USER NAME AND PASSWORD.')
+                        quit(-13)
+                    else:
+                        print('[ERROR/LOGIN] UNDEFINED ERROR.')
+                else:
+                    print('[WARN/LOGIN] WEAK NETWORK CONNECTION, RETRYING...', response.url)
+                    
         
         print('[WARN/LOGIN] 10 TIMES ERROR ON CAPTCHA')
         cookies = session.cookies.get_dict()
@@ -74,7 +120,9 @@ def login(jaccount_name: str, jaccount_password: str) -> dict:
             for key, value in submit.items():
                 url += key + '=' + value + '&'
             response = session.post(url, headers=headers)
-
+            if '&err=' in response.url:
+                print('[ERROR/LOGIN] AN ERROR OCCURRED WHILE LOGGIN IN. CONSIDER A WRONG USER NAME OR PASSWORD, OR A WEAK NETWORK QUALITY.')
+                return {} #
             cookies = session.cookies.get_dict() # dict
         return cookies
     except Exception as error:
