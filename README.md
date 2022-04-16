@@ -32,3 +32,7 @@ When the developers get the value, they can manually save it in the browser with
 ## To-do
 
 With logged-in state, spiders to be made will be able to fetch any convenient information and synthesize together, therefore make your online work smoother and more elegant.
+
+## Known Issues
+
+- Even after you entered correct user name and password, the login process may encounter "weak connection" errors. This may be caused by some protection strategies of the server and you are recommended to retry after waiting for at least 10 seconds.
