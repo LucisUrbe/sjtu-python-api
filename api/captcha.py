@@ -13,11 +13,12 @@ def refresh_captcha(uuid: str, cookies: str) -> bytes:
         }
         image = requests.get(url, headers=headers).content
         # If you need to save the .jpeg image
-        #with open(os.path.dirname(os.path.abspath(__file__)) + '/captcha.jpeg', 'wb') as file:
+        # with open(os.path.dirname(os.path.abspath(__file__)) + '/captcha.jpeg', 'wb') as file:
         #    file.write(image)
         return image
     except Exception as error:
         print('[ERROR/REFRESH_CAPTCHA]', error)
+
 
 def captcha(uuid: str, cookies: str) -> str:
     try:

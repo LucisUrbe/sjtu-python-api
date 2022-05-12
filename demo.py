@@ -17,5 +17,6 @@ def main() -> None:
         print(session.cookies.get('JAAuthCookie'))
         print('Do not tell anyone!')
 
+
 if __name__ == '__main__':
     main()
