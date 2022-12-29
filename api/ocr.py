@@ -7,15 +7,12 @@ TRAINEDDATA = os.path.dirname(os.path.abspath(__file__))
 
 
 def ocr(image: bytes) -> str:
-    try:
-        with PyTessBaseAPI(TRAINEDDATA) as api:
-            api.SetImage(Image.open(BytesIO(image)))
-            return api.GetUTF8Text()
-            # print(api.AllWordConfidences())
-        # api is automatically finalized when used in a with-statement (context manager)
-        # otherwise api.End() should be explicitly called when it's no longer needed
-    except Exception as error:
-        print('[ERROR/OCR]', error)
+    with PyTessBaseAPI(TRAINEDDATA) as api:
+        api.SetImage(Image.open(BytesIO(image)))
+        return api.GetUTF8Text()
+        # print(api.AllWordConfidences())
+    # api is automatically finalized when used in a with-statement (context manager)
+    # otherwise api.End() should be explicitly called when it's no longer needed
 
 # Other usages:
 # print(tesserocr.tesseract_version())  # print tesseract-ocr version
