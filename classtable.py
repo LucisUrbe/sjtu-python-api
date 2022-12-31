@@ -11,8 +11,7 @@ def classtable(session: requests.Session) -> str:
     for key, value in session.cookies.items():
         Cookie += key + '=' + value + ';'
     print(Cookie)
-    print(
-        '[NOTE/CLASSTABLE] Here you volunteer to agree that the program will automatically read your sensitive information for data exchange.')
+    print('[NOTE/CLASSTABLE] Here you volunteer to agree that the program will automatically read your sensitive information for data exchange.')
     headers: dict = {
         'Cookie': Cookie,
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -45,8 +44,7 @@ def classtable(session: requests.Session) -> str:
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
         'Accept': '*/*',
         'Origin': 'https://i.sjtu.edu.cn',
-        'Referer': 'https://i.sjtu.edu.cn' + script.split('\'')[
-            3] + '?gnmkdm=' + gnmkdm + '&layout=default&su=' + student_ID,
+        'Referer': 'https://i.sjtu.edu.cn' + script.split('\'')[3] + '?gnmkdm=' + gnmkdm + '&layout=default&su=' + student_ID,
         'X-Requested-With': 'XMLHttpRequest'
     })
     data: dict = {

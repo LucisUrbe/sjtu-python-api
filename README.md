@@ -25,9 +25,19 @@ But unfortunately, we need to manually input the solution to a captcha before lo
 
 ## Usage
 
+To install all the packages required of the project from PyPI, you can execute the following command in your favorite Python virtual environment at the root of this repository:
+
+```python
+pip install -r requirements.txt
+```
+
+Basically all you need are: `requests` for networking requests, `bs4` for HTML parsing, `tesserocr` for OCR operations about captcha auto-solving, `pillow` for image I/O support.
+
 `demo.py` shows the usage of the API. As for now, it will directly show you the cookie value in the terminal after you correctly enter the user name and password and the program automatically solves the captcha.
 
 When the developers get the value, they can manually save it in the browser with the built-in developer tools of it (or by Javascript). Also, network requests with this cookie sent (from browsers or agents) will have the access to SJTU online authenticated operations, as described above.
+
+`classtable.py` shows how to get a class table of a undergraduate student in SJTU with this API. The output will be printed in the terminal in `json` format. Following operations could be parse the output and visualized in a GUI program.
 
 ## To-do
 
